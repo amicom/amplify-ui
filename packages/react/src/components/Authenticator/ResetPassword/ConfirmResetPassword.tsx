@@ -6,7 +6,7 @@ import {
 } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Flex, Heading, PasswordField, Text } from '../../..';
+import { Flex, Heading, PasswordField, Text } from '@aws-amplify/ui-react';
 import {
   ConfirmationCodeInput,
   RemoteErrorMessage,
@@ -22,24 +22,29 @@ import {
 } from '../../../helpers/utils';
 
 export const ConfirmResetPassword = (): JSX.Element => {
-  const {
-    components: {
-      ConfirmResetPassword: {
-        Header = ConfirmResetPassword.Header,
-        Footer = ConfirmResetPassword.Footer,
-      },
-    },
-  } = useCustomComponents();
+  const Header =
+    useCustomComponents().components?.ConfirmResetPassword?.Header ??
+    ConfirmResetPassword.Header;
+  const Footer =
+    useCustomComponents().components?.ConfirmResetPassword?.Footer ??
+    ConfirmResetPassword.Footer;
 
-  const { _state, submitForm, updateForm, updateBlur, isPending } =
-    useAuthenticator();
+  const {
+    _state,
+    submitForm,
+    updateForm,
+    updateBlur,
+    isPending,
+  } = useAuthenticator();
   const { validationError } = getActorContext(_state) as ResetPasswordContext;
-  const formOverrides =
-    getActorState(_state).context?.formFields?.confirmResetPassword;
+  if (!validationError) throw new Error();
+  const formOverrides = getActorState(_state).context?.formFields
+    ?.confirmResetPassword!;
 
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&
@@ -132,4 +137,4 @@ ConfirmResetPassword.Header = () => {
   return <Heading level={3}>{headerText}</Heading>;
 };
 
-ConfirmResetPassword.Footer = (): JSX.Element => null;
+ConfirmResetPassword.Footer = (): JSX.Element | null => null;

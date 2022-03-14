@@ -1,7 +1,7 @@
 import { translate } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { TabItem, Tabs, View } from '../../..';
+import { TabItem, Tabs, View } from '@aws-amplify/ui-react';
 import { SignIn } from '../SignIn';
 import { SignUp } from '../SignUp';
 

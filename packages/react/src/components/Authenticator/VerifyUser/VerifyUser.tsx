@@ -9,7 +9,7 @@ import {
 } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Heading, Radio, RadioGroupField } from '../../..';
+import { Heading, Radio, RadioGroupField } from '@aws-amplify/ui-react';
 import { RemoteErrorMessage, TwoButtonSubmitFooter } from '../shared';
 import { useCustomComponents } from '../hooks/useCustomComponents';
 import {
@@ -45,7 +45,10 @@ const generateRadioGroup = (
   for (const [key, value] of Object.entries(attributes)) {
     const radio = (
       <Radio name="unverifiedAttr" value={key} key={key}>
-        {censorContactInformation(authInputAttributes[key].label, value)}
+        {censorContactInformation(
+          (authInputAttributes as any)[key].label,
+          value
+        )}
       </Radio>
     );
 
@@ -56,11 +59,10 @@ const generateRadioGroup = (
 };
 
 export const VerifyUser = (): JSX.Element => {
-  const {
-    components: {
-      VerifyUser: { Header = VerifyUser.Header, Footer = VerifyUser.Footer },
-    },
-  } = useCustomComponents();
+  const Header =
+    useCustomComponents().components?.VerifyUser?.Header ?? VerifyUser.Header;
+  const Footer =
+    useCustomComponents().components?.VerifyUser?.Footer ?? VerifyUser.Footer;
 
   const { _state, isPending, submitForm, updateForm } = useAuthenticator();
   const context = getActorContext(_state) as SignInContext;
@@ -78,13 +80,14 @@ export const VerifyUser = (): JSX.Element => {
       name="verify_context"
       isDisabled={isPending}
     >
-      {generateRadioGroup(context.unverifiedAttributes)}
+      {generateRadioGroup(context.unverifiedAttributes!)}
     </RadioGroupField>
   );
 
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&
@@ -140,4 +143,4 @@ VerifyUser.Header = () => {
   );
 };
 
-VerifyUser.Footer = (): JSX.Element => null;
+VerifyUser.Footer = (): JSX.Element | null => null;

@@ -15,7 +15,7 @@ import {
   Text,
   TextField,
   View,
-} from '../../..';
+} from '@aws-amplify/ui-react';
 import { UserNameAlias as UserNameAliasComponent } from '../shared';
 import { propsCreator, phonePropsCreator } from '../../../helpers/utils';
 import React from 'react';
@@ -25,15 +25,18 @@ export function FormFields() {
   const { country_code, validationError } = getActorContext(
     _state
   ) as SignUpContext;
-  const { loginMechanisms, signUpAttributes } = _state.context.config;
+  if (!country_code || !validationError) throw new Error();
+  const loginMechanisms = _state.context.config?.loginMechanisms!;
+  const signUpAttributes = _state.context.config?.signUpAttributes!;
 
-  const [order, setOrder] = React.useState([]);
+  const [order, setOrder] = React.useState<(string | number)[]>([]);
 
   const fieldNames = Array.from(
     new Set([...loginMechanisms, ...signUpAttributes])
   );
 
   const formOverrides = getActorState(_state).context?.formFields?.signUp;
+  if (!formOverrides) throw new Error();
 
   // Only 1 is supported, so `['email', 'phone_number']` will only show `email`
   const loginMechanism = fieldNames.shift() as LoginMechanism | CommonFields;

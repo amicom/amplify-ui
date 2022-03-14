@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
   createAuthenticatorMachine,
   getServiceFacade,
@@ -12,7 +12,7 @@ import {
 import { useSelector, useInterpret } from '@xstate/react';
 import isEmpty from 'lodash/isEmpty';
 
-import { areArraysEqual } from '../../../../helpers';
+import { isEqual } from 'lodash';
 
 export type AuthenticatorContextValue = {
   service?: AuthInterpreter;
@@ -23,10 +23,11 @@ export type AuthenticatorContextValue = {
  *
  * https://xstate.js.org/docs/recipes/react.html#context-provider
  */
-export const AuthenticatorContext: React.Context<AuthenticatorContextValue> =
-  React.createContext({});
+export const AuthenticatorContext: React.Context<AuthenticatorContextValue> = React.createContext(
+  {}
+);
 
-export const Provider = ({ children }) => {
+export const Provider: React.FC = ({ children }) => {
   /**
    * Based on use cases, developer might already have added another Provider
    * outside Authenticator. In that case, we sync the two providers by just
@@ -48,9 +49,9 @@ export const Provider = ({ children }) => {
     ? currentProviderVal
     : parentProviderVal;
 
-  const {
-    service: { send },
-  } = value;
+  const send = value.service?.send;
+
+  if (send === undefined) throw new Error();
 
   React.useEffect(() => {
     return listenToAuthHub(send);
@@ -89,7 +90,11 @@ export type Selector = (context: AuthenticatorContext) => Array<any>;
 
 export const useAuthenticator = (selector?: Selector) => {
   const { service } = React.useContext(AuthenticatorContext);
-  const send = service.send;
+  const send = service?.send;
+
+  if (service === undefined) throw new Error();
+
+  if (send === undefined) throw new Error();
 
   // send aliases are static and thus can be memoized
   const sendAliases = React.useMemo<ReturnType<typeof getSendEventAliases>>(
@@ -137,7 +142,7 @@ export const useAuthenticator = (selector?: Selector) => {
 
     // Shallow compare the array values
     // TODO: is there a reason to compare deep at the cost of expensive comparisons?
-    return areArraysEqual(prevDepsArray, nextDepsArray);
+    return isEqual(prevDepsArray, nextDepsArray);
   };
 
   const state = useSelector(service, xstateSelector, comparator);

@@ -8,15 +8,19 @@ import {
 } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { PhoneNumberField, TextField } from '../../..';
+import { PhoneNumberField, TextField } from '@aws-amplify/ui-react';
 
 export function FormFields() {
   const { _state } = useAuthenticator();
   const { country_code } = getActorContext(_state) as SignUpContext;
+  if (!country_code) throw new Error();
 
   const actorState = getActorState(_state) as SignInState;
-  const { requiredAttributes: fieldNames } =
-    actorState.context as SignInContext;
+  const {
+    requiredAttributes: fieldNames,
+  } = actorState.context as SignInContext;
+
+  if (!fieldNames) throw new Error();
 
   return (
     <>

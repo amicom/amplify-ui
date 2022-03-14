@@ -21,7 +21,7 @@ export type AuthenticatorProps = AuthenticatorMachineOptions &
   ComponentsProviderProps;
 
 // Helper component that sends init event to the parent provider
-function InitMachine({ children, ...data }) {
+const InitMachine: React.FC = ({ children, ...data }) => {
   const { _send, route } = useAuthenticator();
 
   const hasInitialized = React.useRef(false);
@@ -36,7 +36,7 @@ function InitMachine({ children, ...data }) {
     }
   }, [_send, route, data]);
   return <>{children}</>;
-}
+};
 
 export function Authenticator({
   children,

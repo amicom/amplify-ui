@@ -1,12 +1,12 @@
 import { FederatedIdentityProviders, translate } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Divider, Flex } from '../../..';
+import { Divider, Flex } from '@aws-amplify/ui-react';
 import { FederatedSignInButton } from './FederatedSignInButtons';
 
 export function FederatedSignIn() {
   const { _state, route } = useAuthenticator();
-  const { socialProviders = [] } = _state.context.config;
+  const socialProviders = _state.context.config?.socialProviders ?? [];
 
   if (socialProviders.length === 0) {
     return null;

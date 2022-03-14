@@ -1,7 +1,7 @@
 import { translate, hasTranslation, getActorState } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Button, Flex, PasswordField, View } from '../../..';
+import { Button, Flex, PasswordField, View } from '@aws-amplify/ui-react';
 import { FederatedSignIn } from '../FederatedSignIn';
 import { RemoteErrorMessage, UserNameAlias } from '../shared';
 import {
@@ -14,18 +14,21 @@ import { propsCreator } from '../../../helpers/utils';
 
 export function SignIn() {
   const { isPending, submitForm, updateForm, _state } = useAuthenticator();
-  const {
-    components: {
-      SignIn: { Header = SignIn.Header, Footer = SignIn.Footer },
-    },
-  } = useCustomComponents();
+  const Header =
+    useCustomComponents().components?.SignIn?.Header ?? SignIn.Header;
+  const Footer =
+    useCustomComponents().components?.SignIn?.Footer ?? SignIn.Footer;
 
   const formOverrides = getActorState(_state).context?.formFields?.signIn;
+
+  if (formOverrides === undefined) throw new Error();
+
   const userOverrides = formOverrides?.['username'];
 
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&
@@ -98,8 +101,8 @@ export function SignIn() {
   );
 }
 
-SignIn.Header = (): JSX.Element => null;
-SignIn.Footer = () => {
+SignIn.Header = (): JSX.Element | null => null;
+SignIn.Footer = (() => {
   const { toResetPassword } = useAuthenticator();
 
   // Support backwards compatibility for legacy key with trailing space
@@ -119,4 +122,4 @@ SignIn.Footer = () => {
       </Button>
     </View>
   );
-};
+}) as React.FC;

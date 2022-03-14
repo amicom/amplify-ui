@@ -1,7 +1,7 @@
 import { translate } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Button, Flex, View } from '../../..';
+import { Button, Flex, View } from '@aws-amplify/ui-react';
 import { FederatedSignIn } from '../FederatedSignIn';
 import { RemoteErrorMessage } from '../shared';
 import { FormFields } from './FormFields';
@@ -13,22 +13,25 @@ import {
 import { useCustomComponents } from '../hooks/useCustomComponents';
 
 export function SignUp() {
-  const { hasValidationErrors, isPending, submitForm, updateForm, _state } =
-    useAuthenticator();
-
   const {
-    components: {
-      SignUp: {
-        Header = SignUp.Header,
-        FormFields = SignUp.FormFields,
-        Footer = SignUp.Footer,
-      },
-    },
-  } = useCustomComponents();
+    hasValidationErrors,
+    isPending,
+    submitForm,
+    updateForm,
+    _state,
+  } = useAuthenticator();
+
+  const Header =
+    useCustomComponents().components?.SignUp?.Header ?? SignUp.Header;
+  const FormFields =
+    useCustomComponents().components?.SignUp?.FormFields ?? SignUp.FormFields;
+  const Footer =
+    useCustomComponents().components?.SignUp?.Footer ?? SignUp.Footer;
 
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&
@@ -87,6 +90,6 @@ export function SignUp() {
   );
 }
 
-SignUp.Header = (): JSX.Element => null;
+SignUp.Header = (): JSX.Element | null => null;
 SignUp.FormFields = FormFields;
-SignUp.Footer = (): JSX.Element => null;
+SignUp.Footer = (): JSX.Element | null => null;

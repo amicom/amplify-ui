@@ -5,7 +5,7 @@ import {
 } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Flex, Heading, TextField } from '../../..';
+import { Flex, Heading, TextField } from '@aws-amplify/ui-react';
 import { RemoteErrorMessage, TwoButtonSubmitFooter } from '../shared';
 import { useCustomComponents } from '../hooks/useCustomComponents';
 import {
@@ -16,25 +16,24 @@ import {
 } from '../../../helpers/utils';
 
 export const ResetPassword = (): JSX.Element => {
-  const {
-    components: {
-      ResetPassword: {
-        Header = ResetPassword.Header,
-        Footer = ResetPassword.Footer,
-      },
-    },
-  } = useCustomComponents();
+  const Header =
+    useCustomComponents().components?.ResetPassword?.Header ??
+    ResetPassword.Header;
+  const Footer =
+    useCustomComponents().components?.ResetPassword?.Footer ??
+    ResetPassword.Footer;
   const { isPending, submitForm, updateForm, _state } = useAuthenticator();
 
-  const formOverrides =
-    getActorState(_state).context?.formFields?.resetPassword;
+  const formOverrides = getActorState(_state).context?.formFields
+    ?.resetPassword!;
 
   const { label } = getAliasInfoFromContext(_state.context);
   const labelText = `Enter your ${label.toLowerCase()}`;
 
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&
@@ -98,4 +97,4 @@ ResetPassword.Header = () => {
   return <Heading level={3}>{translate('Reset your password')}</Heading>;
 };
 
-ResetPassword.Footer = (): JSX.Element => null;
+ResetPassword.Footer = (): JSX.Element | null => null;

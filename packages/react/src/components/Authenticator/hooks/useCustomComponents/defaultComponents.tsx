@@ -8,7 +8,7 @@ import { ConfirmVerifyUser, VerifyUser } from '../../VerifyUser';
 import { ConfirmResetPassword, ResetPassword } from '../../ResetPassword';
 
 export const defaultComponents = {
-  Header: (): JSX.Element => null,
+  Header: (): JSX.Element | null => null,
   SignIn: {
     Header: SignIn.Header,
     Footer: SignIn.Footer,
@@ -49,5 +49,5 @@ export const defaultComponents = {
     Header: ResetPassword.Header,
     Footer: ResetPassword.Footer,
   },
-  Footer: (): JSX.Element => null,
+  Footer: (): JSX.Element | null => null,
 };

@@ -2,10 +2,15 @@ import QRCode from 'qrcode';
 import * as React from 'react';
 
 import { Auth, Logger } from 'aws-amplify';
-import { getActorState, SignInState, translate } from '@aws-amplify/ui';
+import {
+  CognitoUserAmplify,
+  getActorState,
+  SignInState,
+  translate,
+} from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Flex, Heading } from '../../..';
+import { Flex, Heading } from '@aws-amplify/ui-react';
 import {
   isInputOrSelectElement,
   isInputElement,
@@ -23,11 +28,10 @@ import { useCustomComponents } from '../hooks/useCustomComponents';
 const logger = new Logger('SetupTOTP-logger');
 
 export const SetupTOTP = (): JSX.Element => {
-  const {
-    components: {
-      SetupTOTP: { Header = SetupTOTP.Header, Footer = SetupTOTP.Footer },
-    },
-  } = useCustomComponents();
+  const Header =
+    useCustomComponents().components?.SetupTOTP?.Header ?? SetupTOTP.Header;
+  const Footer =
+    useCustomComponents().components?.SetupTOTP?.Footer ?? SetupTOTP.Footer;
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [qrCode, setQrCode] = React.useState<string>();
@@ -42,9 +46,11 @@ export const SetupTOTP = (): JSX.Element => {
 
   const formOverrides = getActorState(_state).context?.formFields?.setupTOTP;
 
+  if (formOverrides === undefined) throw new Error();
+
   const QROR = formOverrides?.['QR'];
 
-  const generateQRCode = async (user): Promise<void> => {
+  const generateQRCode = async (user: CognitoUserAmplify): Promise<void> => {
     try {
       const newSecretKey = await Auth.setupTOTP(user);
       setSecretKey(newSecretKey);
@@ -69,7 +75,8 @@ export const SetupTOTP = (): JSX.Element => {
 
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&
@@ -156,4 +163,4 @@ SetupTOTP.Header = () => {
   return <Heading level={3}>{translate('Setup TOTP')}</Heading>;
 };
 
-SetupTOTP.Footer = (): JSX.Element => null;
+SetupTOTP.Footer = (): JSX.Element | null => null;

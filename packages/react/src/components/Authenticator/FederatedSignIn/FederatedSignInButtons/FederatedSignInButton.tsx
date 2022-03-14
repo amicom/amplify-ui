@@ -1,7 +1,7 @@
 import { FederatedIdentityProviders, SocialProvider } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '../..';
-import { Button, Icon, Text } from '../../../..';
+import { Button, ButtonProps, Icon, Text } from '@aws-amplify/ui-react';
 
 export interface FederatedSignInButtonProps {
   icon?: SocialProvider;
@@ -96,7 +96,7 @@ export const FederatedSignInButton = (
   const { icon, provider, text } = props;
   const { _send } = useAuthenticator();
 
-  const handleClick = (event): void => {
+  const handleClick: ButtonProps['onClick'] = (event): void => {
     event.preventDefault();
 
     _send({

@@ -7,7 +7,7 @@ import {
 } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Flex, Heading } from '../../..';
+import { Flex, Heading } from '@aws-amplify/ui-react';
 import { ConfirmationCodeInput, ConfirmSignInFooter } from '../shared';
 import { useCustomComponents } from '../hooks/useCustomComponents';
 import {
@@ -18,24 +18,28 @@ import {
 } from '../../../helpers/utils';
 
 export const ConfirmSignIn = (): JSX.Element => {
-  const { error, submitForm, updateForm, isPending, _state } =
-    useAuthenticator();
-
-  const formOverrides =
-    getActorState(_state).context?.formFields?.confirmSignIn;
-
   const {
-    components: {
-      ConfirmSignIn: {
-        Header = ConfirmSignIn.Header,
-        Footer = ConfirmSignIn.Footer,
-      },
-    },
-  } = useCustomComponents();
+    error,
+    submitForm,
+    updateForm,
+    isPending,
+    _state,
+  } = useAuthenticator();
+
+  const formOverrides = getActorState(_state).context?.formFields
+    ?.confirmSignIn!;
+
+  const Header =
+    useCustomComponents().components?.ConfirmSignIn?.Header ??
+    ConfirmSignIn.Header;
+  const Footer =
+    useCustomComponents().components?.ConfirmSignIn?.Footer ??
+    ConfirmSignIn.Footer;
 
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&
@@ -113,4 +117,4 @@ function Header() {
 }
 ConfirmSignIn.Header = Header;
 
-ConfirmSignIn.Footer = (): JSX.Element => null;
+ConfirmSignIn.Footer = (): JSX.Element | null => null;

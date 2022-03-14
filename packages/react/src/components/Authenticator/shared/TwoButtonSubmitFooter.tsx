@@ -1,7 +1,7 @@
 import { AuthEventTypes, translate } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Button, Flex } from '../../..';
+import { Button, Flex } from '@aws-amplify/ui-react';
 
 export interface TwoButtonSubmitFooterProps {
   cancelButtonSendType: AuthEventTypes;

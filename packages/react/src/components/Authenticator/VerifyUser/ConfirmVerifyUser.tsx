@@ -1,7 +1,7 @@
 import { getActorState, translate } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Flex, Heading } from '../../..';
+import { Flex, Heading } from '@aws-amplify/ui-react';
 import {
   ConfirmationCodeInput,
   RemoteErrorMessage,
@@ -16,23 +16,22 @@ import {
 } from '../../../helpers/utils';
 
 export const ConfirmVerifyUser = (): JSX.Element => {
-  const {
-    components: {
-      ConfirmVerifyUser: {
-        Header = ConfirmVerifyUser.Header,
-        Footer = ConfirmVerifyUser.Footer,
-      },
-    },
-  } = useCustomComponents();
+  const Header =
+    useCustomComponents().components?.ConfirmVerifyUser?.Header ??
+    ConfirmVerifyUser.Header;
+  const Footer =
+    useCustomComponents().components?.ConfirmVerifyUser?.Footer ??
+    ConfirmVerifyUser.Footer;
 
   const { submitForm, updateForm, isPending, _state } = useAuthenticator();
 
-  const formOverrides =
-    getActorState(_state).context?.formFields?.confirmVerifyUser;
+  const formOverrides = getActorState(_state).context?.formFields
+    ?.confirmVerifyUser!;
 
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&
@@ -96,4 +95,4 @@ ConfirmVerifyUser.Header = () => {
   );
 };
 
-ConfirmVerifyUser.Footer = (): JSX.Element => null;
+ConfirmVerifyUser.Footer = (): JSX.Element | null => null;

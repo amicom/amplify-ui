@@ -1,7 +1,7 @@
 import { getActorState, translate } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '../..';
-import { Button, Flex, Heading, Text } from '../../..';
+import { Button, Flex, Heading, Text } from '@aws-amplify/ui-react';
 import {
   isInputOrSelectElement,
   isInputElement,
@@ -25,21 +25,22 @@ export function ConfirmSignUp() {
     _state,
     codeDeliveryDetails: { DeliveryMedium, Destination } = {},
   } = useAuthenticator();
-  const {
-    components: {
-      ConfirmSignUp: {
-        Header = ConfirmSignUp.Header,
-        Footer = ConfirmSignUp.Footer,
-      },
-    },
-  } = useCustomComponents();
+  const Header =
+    useCustomComponents().components?.ConfirmSignUp?.Header ??
+    ConfirmSignUp.Header;
+  const Footer =
+    useCustomComponents().components?.ConfirmSignUp?.Footer ??
+    ConfirmSignUp.Footer;
 
-  const formOverrides =
-    getActorState(_state).context?.formFields?.confirmSignUp;
+  const formOverrides = getActorState(_state).context?.formFields
+    ?.confirmSignUp;
+
+  if (formOverrides === undefined) throw new Error();
 
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&
@@ -69,7 +70,10 @@ export function ConfirmSignUp() {
 
   const minutesMessage = translate('It may take a minute to arrive.');
 
-  const confirmationCodeInputProps: ConfirmationCodeInputProps = {
+  const confirmationCodeInputProps: Required<Pick<
+    ConfirmationCodeInputProps,
+    'label' | 'placeholder'
+  >> = {
     label: translate('Confirmation Code'),
     placeholder: translate('Enter your code'),
   };
@@ -131,9 +135,10 @@ export function ConfirmSignUp() {
   );
 }
 
-ConfirmSignUp.Header = () => {
-  const { codeDeliveryDetails: { DeliveryMedium, Destination } = {} } =
-    useAuthenticator();
+ConfirmSignUp.Header = (() => {
+  const {
+    codeDeliveryDetails: { DeliveryMedium, Destination } = {},
+  } = useAuthenticator();
 
   const confirmSignUpHeading =
     DeliveryMedium === 'EMAIL'
@@ -147,6 +152,6 @@ ConfirmSignUp.Header = () => {
       {confirmSignUpHeading}
     </Heading>
   );
-};
+}) as React.FC;
 
-ConfirmSignUp.Footer = (): JSX.Element => null;
+ConfirmSignUp.Footer = (): JSX.Element | null => null;

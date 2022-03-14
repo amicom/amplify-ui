@@ -6,7 +6,13 @@ import {
 } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { Button, Flex, Heading, PasswordField, Text } from '../../..';
+import {
+  Button,
+  Flex,
+  Heading,
+  PasswordField,
+  Text,
+} from '@aws-amplify/ui-react';
 import {
   isInputOrSelectElement,
   isInputElement,
@@ -27,19 +33,19 @@ export const ForceNewPassword = (): JSX.Element => {
     updateBlur,
   } = useAuthenticator();
 
-  const {
-    components: {
-      ForceNewPassword: { FormFields = ForceNewPassword.FormFields },
-    },
-  } = useCustomComponents();
+  const FormFields =
+    useCustomComponents().components?.ForceNewPassword?.FormFields ??
+    ForceNewPassword.FormFields;
 
-  const formOverrides =
-    getActorState(_state).context?.formFields?.forceNewPassword;
+  const formOverrides = getActorState(_state).context?.formFields
+    ?.forceNewPassword!;
 
   const { validationError } = getActorContext(_state) as SignInContext;
+  if (!validationError) throw new Error();
   const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
     if (isInputOrSelectElement(event.target)) {
-      let { name, type, value } = event.target;
+      const { name, type } = event.target;
+      let value = event.target.value as string | undefined;
       if (
         isInputElement(event.target) &&
         type === 'checkbox' &&

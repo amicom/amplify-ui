@@ -1,7 +1,7 @@
 import { translate } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '../..';
-import { Button, Flex } from '../../..';
+import { Button, Flex } from '@aws-amplify/ui-react';
 
 export const ConfirmSignInFooter = () => {
   const { isPending, toSignIn } = useAuthenticator();

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { createTheme, Theme } from '@aws-amplify/ui';
 
@@ -29,8 +29,9 @@ export function AmplifyProvider({
   React.useEffect(() => {
     if (document && document.documentElement) {
       // Keep original data attributes to reset on unmount
-      const originalName =
-        document.documentElement.getAttribute('data-amplify-theme');
+      const originalName = document.documentElement.getAttribute(
+        'data-amplify-theme'
+      );
       const originalColorMode = document.documentElement.getAttribute(
         'data-amplify-color-mode'
       );
@@ -41,10 +42,12 @@ export function AmplifyProvider({
       );
 
       return function cleanup() {
+        if (!originalName) throw new Error();
         document.documentElement.setAttribute(
           'data-amplify-theme',
           originalName
         );
+        if (!originalColorMode) throw new Error();
         document.documentElement.setAttribute(
           'data-amplify-color-mode',
           originalColorMode

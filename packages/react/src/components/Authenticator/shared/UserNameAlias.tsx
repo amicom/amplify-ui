@@ -7,10 +7,11 @@ import {
 } from '@aws-amplify/ui';
 
 import { useAuthenticator } from '..';
-import { PhoneNumberField, TextField } from '../../..';
+import { PhoneNumberField, TextField } from '@aws-amplify/ui-react';
+import { InputHTMLAttributes } from 'react';
 
 export interface UserNameAliasProps {
-  handleInputChange?(event): void;
+  handleInputChange?: InputHTMLAttributes<HTMLInputElement>['onChange'];
   alias?: LoginMechanism;
   labelHidden?: boolean;
   label?: string;
@@ -46,7 +47,7 @@ export function UserNameAlias(props: UserNameAliasProps) {
     <PhoneNumberField
       autoComplete="username"
       countryCodeName="country_code"
-      defaultCountryCode={dialCode ?? country_code}
+      defaultCountryCode={dialCode ?? country_code!}
       dialCodeList={dialCodeList}
       errorMessage={error}
       label={i18nLabel}
