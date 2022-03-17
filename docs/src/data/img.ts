@@ -34,16 +34,6 @@ export const REACTNATIVE = {
   alt: 'React Native Icon',
 };
 
-export const ANGULAR = {
-  src: '/assets/integrations/angular.svg',
-  alt: 'Angular Icon',
-};
-
-export const VUE = {
-  src: '/assets/integrations/vue.svg',
-  alt: 'Vue Icon',
-};
-
 export const IONIC = {
   src: '/assets/integrations/ionic.svg',
   alt: 'Ionic Icon',

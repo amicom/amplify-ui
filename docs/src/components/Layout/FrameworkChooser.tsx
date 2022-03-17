@@ -52,24 +52,6 @@ export const FrameworkChooser = ({ platform }) => {
           src="/svg/integrations/react.svg"
         />
       </ToggleButton>
-      <ToggleButton value="angular" size="small">
-        <VisuallyHidden>Angular</VisuallyHidden>
-        <Image
-          alt=""
-          height="1rem"
-          display="block"
-          src="/svg/integrations/angular.svg"
-        />
-      </ToggleButton>
-      <ToggleButton value="vue" size="small">
-        <VisuallyHidden>Vue</VisuallyHidden>
-        <Image
-          alt=""
-          height="1rem"
-          display="block"
-          src="/svg/integrations/vue.svg"
-        />
-      </ToggleButton>
       <ToggleButton value="flutter" size="small">
         <VisuallyHidden>Flutter</VisuallyHidden>
         <Image

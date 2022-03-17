@@ -5,13 +5,13 @@ Feature: Sign Up with Email
   Background:
     Given I'm running the example "ui/components/authenticator/sign-up-with-email"
 
-  @angular @react @vue
+  @react
   Scenario: Login mechanism set to "email"
     Then I see "Email" as an input field
     And I don't see "Username" as an input field
     And I don't see "Phone Number" as an input field
 
-  @angular @react @vue  
+  @react  
   Scenario: Sign up with a new email & password and lowercase the email 
     Given I intercept '{ "headers": { "X-Amz-Target": "AWSCognitoIdentityProviderService.SignUp" } }' with fixture "sign-up-with-email"
     When I type a new "email" with value "TEST@example.com"
@@ -21,7 +21,7 @@ Feature: Sign Up with Email
     And I verify the body has "test@example.com" included
     Then I see "Confirmation Code"
 
-@angular @react @vue  
+@react  
 Scenario: Sign up with a new email & password
   Given I intercept '{ "headers": { "X-Amz-Target": "AWSCognitoIdentityProviderService.SignUp" } }' with fixture "sign-up-with-email"
   When I type a new "email"
@@ -30,7 +30,7 @@ Scenario: Sign up with a new email & password
   And I click the "Create Account" button
   Then I see "Confirmation Code"
 
-  @angular @react @vue
+  @react
   Scenario: Email field autocompletes username
 
   On sign up form, autocomplete prefers usage of username instead of email. 
@@ -38,7 +38,7 @@ Scenario: Sign up with a new email & password
 
     And "Email" field autocompletes "username"
 
-  @angular @react @vue
+  @react
   Scenario: Password fields autocomplete "new-password"
     And "Password" field autocompletes "new-password"
     And "Confirm Password" field autocompletes "new-password"

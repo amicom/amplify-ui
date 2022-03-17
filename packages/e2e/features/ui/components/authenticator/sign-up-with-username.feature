@@ -5,23 +5,23 @@ Feature: Sign Up with Username
   Background:
     Given I'm running the example "ui/components/authenticator/sign-up-with-username"
 
-  @angular @react @vue
+  @react
   Scenario: Login mechanism set to "username"
     Then I see "Username" as an input field
 
-  @angular @react @vue 
+  @react 
   Scenario: "Preferred Username" is included from `aws_cognito_signup_attributes`
     Then I see "Preferred Username" as a "text" field
 
-  @angular @react @vue 
+  @react 
   Scenario: "Email" is included from `aws_cognito_verification_mechanisms`
     Then I see "Email" as an "email" field
   
-  @angular @react @vue 
+  @react 
   Scenario: "Phone Number" is not included
     Then I don't see "Phone Number"
   
-  @angular @react @vue 
+  @react 
   Scenario: Sign up a new username & password
     Given I intercept '{ "headers": { "X-Amz-Target": "AWSCognitoIdentityProviderService.SignUp" } }' with fixture "sign-up-with-username"
     When I type a new "username"
@@ -33,11 +33,11 @@ Feature: Sign Up with Username
     Then I see "Your code is on the way"
     And I see "Confirmation Code"
 
-  @angular @react @vue
+  @react
   Scenario: Username field autocompletes username
     Then "Username" field autocompletes "username"
 
-  @angular @react @vue
+  @react
   Scenario: Password fields autocomplete "new-password"
     Then "Password" field autocompletes "new-password"
     And "Confirm Password" field autocompletes "new-password"

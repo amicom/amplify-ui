@@ -10,21 +10,21 @@ Feature: Sign In with Username
   Background:
     Given I'm running the example "/ui/components/authenticator/sign-in-with-username"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with unknown credentials
     When I type my "username" with status "UNKNOWN"
     And I type my password
     And I click the "Sign in" button
     Then I see "User does not exist"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with unconfirmed credentials
     When I type my "username" with status "UNCONFIRMED"
     And I type my password
     And I click the "Sign in" button
     Then I see "Confirmation Code"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with confirmed credentials
     When I type my "username" with status "CONFIRMED"
     And I type my password
@@ -33,7 +33,7 @@ Feature: Sign In with Username
     When I reload the page
     Then I see "Sign out"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with confirmed credentials then sign out
     When I type my "username" with status "CONFIRMED"
     And I type my password
@@ -46,7 +46,7 @@ Feature: Sign In with Username
 
   # FORCE_CHANGE_PASSWORD tests are skipped as the temporary passwords used for these
   # test accounts will expire in Cognito.
-  @angular @react @vue
+  @react
   Scenario: Sign in with force change password credentials
     Given I intercept '{ "headers": { "X-Amz-Target": "AWSCognitoIdentityProviderService.RespondToAuthChallenge" } }' with fixture "force-change-password"
     When I type my "username" with status "FORCE_CHANGE_PASSWORD"
@@ -54,10 +54,10 @@ Feature: Sign In with Username
     And I click the "Sign in" button
     Then I see "Change Password"
 
-  @angular @react @vue
+  @react
   Scenario: Username field autocompletes username
     Then "Username" field autocompletes "username"
 
-  @angular @react @vue
+  @react
   Scenario: Password fields autocomplete "current-password"
     Then "Password" field autocompletes "current-password"

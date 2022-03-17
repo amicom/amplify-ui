@@ -6,14 +6,14 @@ Feature: Sign In with TOTP MFA
   Background:
     Given I'm running the example "ui/components/authenticator/sign-in-totp-mfa"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with valid credentials that have not set up TOTP MFA
     When I type my "email" with status "CONFIRMED"
     And I type my password
     And I click the "Sign in" button
     Then I will be redirected to the setup totp page
 
-  @angular @react @vue
+  @react
   Scenario: Redirect to sign in page
     When I type my "email" with status "CONFIRMED"
     And I type my password
@@ -21,7 +21,7 @@ Feature: Sign In with TOTP MFA
     And I click the "Back to Sign In" button
     Then I see "Sign in"
   
-  @angular @react @vue
+  @react
   Scenario: Invalid TOTP code
     When I type my "email" with status "CONFIRMED"
     And I type my password
@@ -30,14 +30,14 @@ Feature: Sign In with TOTP MFA
     And I click the "Confirm" button
     Then I see 'Code mismatch'
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with unknown credentials
     When I type my "email" with status "UNKNOWN"
     And I type my password
     And I click the "Sign in" button
     Then I see "User does not exist"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with force change password with mfa setup
     Given I intercept '{ "headers": { "X-Amz-Target": "AWSCognitoIdentityProviderService.RespondToAuthChallenge" } }' with fixture "force-change-password"
     When I type my "email" with status "FORCE_CHANGE_PASSWORD"

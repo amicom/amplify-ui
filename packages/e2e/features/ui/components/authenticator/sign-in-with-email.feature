@@ -10,14 +10,14 @@ Feature: Sign In with Email
   Background:
     Given I'm running the example "/ui/components/authenticator/sign-in-with-email"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with unknown credentials
     When I type my "email" with status "UNKNOWN"
     And I type my password
     And I click the "Sign in" button
     Then I see "User does not exist"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with unconfirmed credentials
 
   If you sign in with an unconfirmed account, Authenticator will redirect you to `confirmSignUp` route.
@@ -36,14 +36,14 @@ Feature: Sign In with Email
     Then I see "Sign out"
 
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with confirmed credentials
     When I type my "email" with status "CONFIRMED"
     And I type my password
     And I click the "Sign in" button
     Then I see "Sign out"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with confirmed credentials then sign out
     When I type my "email" with status "CONFIRMED"
     And I type my password
@@ -52,12 +52,12 @@ Feature: Sign In with Email
     And I click the "Sign out" button
     Then I see "Sign in"
 
-  @angular @react @vue
+  @react
   Scenario: Sign Up Tab Is Not Present 
     Then I see "Sign in"
     Then I don't see "Create Account"
 
-  @angular @react @vue
+  @react
   Scenario: Email field autocompletes username
 
   On sign in form, autocomplete prefers usage of username instead of email. 
@@ -65,6 +65,6 @@ Feature: Sign In with Email
 
     And "Email" field autocompletes "username"
 
-  @angular @react @vue
+  @react
   Scenario: Password fields autocomplete "current-password"
     And "Password" field autocompletes "current-password"

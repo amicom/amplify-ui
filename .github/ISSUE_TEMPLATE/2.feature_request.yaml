@@ -14,8 +14,6 @@ body:
       multiple: true
       options:
         - React
-        - Angular
-        - Vue
         - React Native
         - Flutter
         - iOS

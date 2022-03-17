@@ -6,7 +6,7 @@ Feature: Sign Up with Email
     Given I'm running the example "/"
 
 
-@angular @react @vue  
+@react  
   Scenario: Sign up with a new email & password
     Given I intercept '{ "headers": { "X-Amz-Target": "AWSCognitoIdentityProviderService.SignUp" } }' with fixture "sign-up-with-email"
     When I click the "Create Account" tab 

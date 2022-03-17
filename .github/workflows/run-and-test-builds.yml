@@ -13,13 +13,10 @@ jobs:
       matrix:
         # Paths for each example app we want to test build on
         path:
-          - angular/angularcli
           - react/cra
           - react/cra-ts
           - react/next
           - react/vite
-          - vue/vite
-          - vue/vuecli
     steps:
       - name: Checkout Amplify UI
         uses: actions/checkout@v3

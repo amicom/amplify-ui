@@ -61,13 +61,9 @@ amplify-ui
 ├── docs # ui.docs.amplify.aws documentation code
 ├── environments # Amplify backend environments we use for e2e testing
 ├── examples # Example apps we use for e2e testing
-│   └── angular
 │   └── next
-│   └── vue
 ├── packages # Amplify UI components implementations
-│   └── angular
 │   └── react
-│   └── vue
 ```
 
 ## Local Development Guides
@@ -76,9 +72,7 @@ Please refer to the following contributing guides:
 
 - [`docs`](docs/README.md#contributing)
 - [`@aws-amplify/ui`](packages/ui/CONTRIBUTING.md)
-- [`@aws-amplify/ui-angular`](packages/angular/CONTRIBUTING.md)
 - [`@aws-amplify/ui-react`](packages/react/CONTRIBUTING.md)
-- [`@aws-amplify/ui-vue`](packages/vue/CONTRIBUTING.md)
 - [`examples`](examples/README.md#examples-development)
 - [`e2e`](packages/e2e/README.md#contributing)
 - [`environments`](environments/README.md#external-contributors)

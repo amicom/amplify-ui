@@ -36,7 +36,7 @@ jobs:
       - name: Bump ui and ui-react packages
         run: cp .github/changeset-presets/bump-react.md .changeset
       - name: Run changeset version to geo tag
-        run: yarn changeset version --snapshot geo-$(git rev-parse --short=7 HEAD) && yarn angular build
+        run: yarn changeset version --snapshot geo-$(git rev-parse --short=7 HEAD)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create .npmrc

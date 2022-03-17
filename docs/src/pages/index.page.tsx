@@ -139,8 +139,6 @@ const HomePage = ({ colorMode, setThemeOverride, themeOverride }) => {
   };
   const installScripts = {
     react: `npm i @aws-amplify/ui-${framework} aws-amplify`,
-    vue: `npm i @aws-amplify/ui-${framework} aws-amplify`,
-    angular: `npm i @aws-amplify/ui-${framework} aws-amplify`,
     flutter: 'flutter pub add amplify_authenticator',
   };
   const frameworkInstallScript = installScripts[framework];
@@ -192,18 +190,8 @@ const HomePage = ({ colorMode, setThemeOverride, themeOverride }) => {
           >
             <Image
               alt=""
-              className="docs-home-vue"
-              src="/svg/integrations/vue.svg"
-            />
-            <Image
-              alt=""
               className="docs-home-react"
               src="/svg/integrations/react.svg"
-            />
-            <Image
-              alt=""
-              className="docs-home-angular"
-              src="/svg/integrations/angular.svg"
             />
             <Image
               alt=""

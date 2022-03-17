@@ -10,14 +10,14 @@ Feature: Sign In with Email
   Background:
     Given I'm running the example "/"
 
-  @angular @react @vue
+  @react
   Scenario: Sign in with unknown credentials
     When I type my "email" with status "UNKNOWN"
     And I type my password
     And I click the "Sign in" button
     Then I see "User does not exist"
 
-@angular @react @vue
+@react
   Scenario: Sign in with confirmed credentials then sign out
     When I type my "email" with status "CONFIRMED"
     And I type my password

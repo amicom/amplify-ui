@@ -5,7 +5,7 @@ Feature: Sign Up with Errors
   Background:
     Given I'm running the example "ui/components/authenticator/sign-up-with-email"
 
-@angular @react @vue  
+@react  
 Scenario: Sign up with a new email & password with wrong password requirements
   When I type a new "email"
   And I type an invalid wrong complexity password

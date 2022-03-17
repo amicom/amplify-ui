@@ -25,7 +25,7 @@ _prerequisite_: You must create populate `packages/e2e/.env` values in order for
 
      Documentation-friendly description of this feature, why it exists, & how to use it.
 
-     @angular @react @vue
+     @react
      Scenario: Example scenario using this feature
        Given some "STARTING_POINT"
        When I DO "SOMETHING"
@@ -35,8 +35,8 @@ _prerequisite_: You must create populate `packages/e2e/.env` values in order for
      @react @skip
      Scenario: Some React-specific scenario that can't be rain in CI
 
-     @angular @todo-react @todo-vue
-     Scenario: Some scenario supported in Angular, but React & Vue haven't added yet
+     @todo-react
+     Scenario: Some scenario supported in Angular, but React haven't added yet
    ```
 
 1. Create or Update the accompanying `${slug}.feature` tests (e.g. `packages/e2e/cypress/integration/${slug}/${feature}/${feature}.steps.ts`
@@ -52,26 +52,20 @@ _prerequisite_: You must create populate `packages/e2e/.env` values in order for
 
    - If the library supports it, then add one of the following:
 
-     - `@angular` for `@aws-amplify/ui-angular`
      - `@react` for `@aws-amplify/ui-react`
-     - `@vue` for `@aws-amplify/ui-vue`
 
      This will ensure automated documentation marks these as supported features.
 
    - If the library supports it, **but tests cannot be ran in CI for technical reasons**, then also add:
 
      - `@skip` for all libraries
-     - `@skip-angular` for specifically `@aws-amplify/ui-angular`
      - `@skip-react` for specifically `@aws-amplify/ui-react`
-     - `@skip-vue` for specifically `@aws-amplify/ui-vue`
 
      This will ensure automated documentation marks these as supported features, but won't block builds (in PRs or `main`) with test failures.
 
    - If the library _should_ support it, then also add:
 
-     - `@todo-angular` for `@aws-amplify/ui-angular`
      - `@todo-react` for `@aws-amplify/ui-react`
-     - `@todo-vue` for `@aws-amplify/ui-vue`
 
      This will ensure automated documentation marks these as _upcoming_ features, will skip these on PRs, but **will error on `main` until completed**.
 

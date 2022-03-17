@@ -5,23 +5,19 @@
     "clean": "turbo run clean && rimraf node_modules",
     "setup": "yarn install && yarn build",
     "refresh": "yarn clean && yarn setup",
-    "angular": "yarn workspace @aws-amplify/ui-angular",
     "react": "yarn workspace @aws-amplify/ui-react",
     "ui": "yarn workspace @aws-amplify/ui",
-    "vue": "yarn workspace @aws-amplify/ui-vue",
-    "angular-example": "yarn workspace angular-example",
     "docs": "yarn workspace docs",
     "next-example": "yarn workspace next-example",
     "react-example": "yarn workspace next-example",
-    "vue-example": "yarn workspace vue-example",
     "e2e": "yarn workspace e2e",
     "environments": "yarn workspace environments",
     "build:icons": "yarn react build:icons",
     "test": "yarn ui test && yarn react test && yarn e2e test",
     "prepare": "husky install",
-    "version:next": "yarn changeset version --snapshot next-$(git rev-parse --short=7 HEAD) && yarn angular build",
+    "version:next": "yarn changeset version --snapshot next-$(git rev-parse --short=7 HEAD)",
     "publish:next": "yarn changeset publish --tag next",
-    "version:latest": "yarn changeset version && yarn angular build",
+    "version:latest": "yarn changeset version",
     "publish:latest": "yarn changeset publish",
     "canary:build": "yarn --cwd canary/ build",
     "canary:install": "yarn --cwd canary/ install ",
@@ -48,11 +44,9 @@
   },
   "workspaces": [
     "docs",
-    "angular-docs",
     "environments",
     "examples/*",
-    "packages/*",
-    "packages/angular/projects/ui-angular"
+    "packages/*"
   ],
   "resolutions": {
     "ansi-regex": "5.0.1",
@@ -65,7 +59,6 @@
     "prism-react-renderer": "1.2.1",
     "trim": "^0.0.3",
     "ts-jest": "^26.5.6",
-    "vscode-vue-languageservice": "0.27.26",
     "ws": "^7.4.6"
   },
   "devDependencies": {
